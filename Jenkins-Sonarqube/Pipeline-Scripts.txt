@@ -1,0 +1,12 @@
+    
+    node {
+        def mvnHome = tool 'Maven-OS'
+        stage('SCM') {
+            git 'https://github.com/purnomo010981/Spring-Boot-Starter.git'
+        }
+        stage('SonarQube analysis') {
+            withSonarQubeEnv(credentialsId: 'SonarQube-Token', installationName: 'LocalSonarQube') { // You can override the credential to be used
+                bat "${mvnHome}bin\\mvn.cmd org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar"
+            }
+        }
+    }
